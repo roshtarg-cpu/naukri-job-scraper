@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Fetch Camoufox browser
+RUN python3 -m camoufox fetch
+
 # Copy actor source code
 COPY src ./src
 
