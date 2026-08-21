@@ -1,0 +1,71 @@
+{
+  "title": "Naukri Job Listing Output",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "jobTitle": {
+      "title": "Job Title",
+      "type": "string",
+      "description": "Title of the job position",
+      "example": "Senior Software Engineer"
+    },
+    "companyName": {
+      "title": "Company Name",
+      "type": "string",
+      "description": "Name of the hiring company",
+      "example": "Tech Corp India"
+    },
+    "location": {
+      "title": "Location",
+      "type": "string",
+      "description": "Job location (city/region)",
+      "example": "Bengaluru"
+    },
+    "experience": {
+      "title": "Experience Required",
+      "type": "string",
+      "description": "Required experience level",
+      "example": "3-5 years"
+    },
+    "salary": {
+      "title": "Salary Range",
+      "type": "string",
+      "description": "Salary range or 'Not disclosed'",
+      "example": "15-20 Lakhs"
+    },
+    "jobUrl": {
+      "title": "Job URL",
+      "type": "string",
+      "description": "Direct link to the job posting",
+      "example": "https://www.naukri.com/job-listings-..."
+    },
+    "postedDate": {
+      "title": "Posted Date",
+      "type": "string",
+      "description": "When the job was posted",
+      "example": "2 days ago"
+    },
+    "skills": {
+      "title": "Required Skills",
+      "type": "array",
+      "description": "List of required skills/technologies",
+      "items": {
+        "type": "string"
+      },
+      "example": ["Python", "Django", "AWS"]
+    },
+    "jobDescription": {
+      "title": "Job Description",
+      "type": "string",
+      "description": "Full job description text",
+      "example": "We are looking for an experienced..."
+    },
+    "scrapedAt": {
+      "title": "Scraped At",
+      "type": "string",
+      "description": "ISO timestamp when data was scraped",
+      "example": "2025-08-21T10:30:00Z"
+    }
+  },
+  "required": ["jobTitle", "companyName", "scrapedAt"]
+}

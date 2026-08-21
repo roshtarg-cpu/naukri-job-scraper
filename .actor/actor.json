@@ -1,0 +1,64 @@
+{
+  "actorSpecification": 1,
+  "name": "naukri-job-scraper",
+  "title": "Naukri.com Job Scraper",
+  "description": "Fast and reliable scraper for Naukri.com job listings. Extract job titles, companies, salaries, locations, and more from India's leading job portal.",
+  "version": "1.0.0",
+  "meta": {
+    "templateId": "python-playwright"
+  },
+  "input": "./.actor/input_schema.json",
+  "output": "./.actor/output_schema.json",
+  "dockerfile": "./Dockerfile",
+  "storages": {
+    "dataset": {
+      "actorSpecification": 1,
+      "title": "Naukri Job Listings",
+      "description": "Job listings scraped from Naukri.com",
+      "views": {
+        "overview": {
+          "title": "Overview",
+          "transformation": {
+            "fields": [
+              "jobTitle",
+              "companyName",
+              "location",
+              "experience",
+              "salary",
+              "jobUrl"
+            ]
+          },
+          "display": {
+            "component": "table",
+            "properties": {
+              "jobTitle": {
+                "label": "Job Title",
+                "format": "text"
+              },
+              "companyName": {
+                "label": "Company",
+                "format": "text"
+              },
+              "location": {
+                "label": "Location",
+                "format": "text"
+              },
+              "experience": {
+                "label": "Experience",
+                "format": "text"
+              },
+              "salary": {
+                "label": "Salary",
+                "format": "text"
+              },
+              "jobUrl": {
+                "label": "Job URL",
+                "format": "link"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
