@@ -7,8 +7,8 @@
   "meta": {
     "templateId": "python-playwright"
   },
-  "input": "./.actor/input_schema.json",
-  "output": "./.actor/output_schema.json",
+  "input": ".actor/input_schema.json",
+  "output": ".actor/output_schema.json",
   "dockerfile": "./Dockerfile",
   "storages": {
     "dataset": {
