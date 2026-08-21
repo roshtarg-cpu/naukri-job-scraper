@@ -40,13 +40,25 @@ async def main() -> None:
             }
             
             # Add proxy if configured
-            if proxy_config:
-                proxy_url = await Actor.create_proxy_url(proxy_config)
-                if proxy_url:
-                    Actor.log.info(f"Using proxy")
+            if proxy_config and proxy_config.get('useApifyProxy'):
+                Actor.log.info("Using Apify Proxy")
+                # Apify Proxy URL format
+                proxy_groups = proxy_config.get('apifyProxyGroups', [])
+                proxy_country = proxy_config.get('apifyProxyCountry', 'IN')
+                
+                # Build Apify proxy URL
+                from apify import ProxyConfiguration
+                proxy_conf = ProxyConfiguration(
+                    groups=proxy_groups if proxy_groups else None,
+                    country_code=proxy_country
+                )
+                proxy_info = await proxy_conf.new_url()
+                
+                if proxy_info:
+                    Actor.log.info(f"Proxy configured for country: {proxy_country}")
                     # Parse proxy URL
                     import re
-                    match = re.match(r'http://([^:]+):([^@]+)@([^:]+):(\d+)', proxy_url)
+                    match = re.match(r'http://([^:]+):([^@]+)@([^:]+):(\d+)', proxy_info)
                     if match:
                         username, password, server, port = match.groups()
                         launch_options["proxy"] = {
