@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List
 
 from apify import Actor
-from camoufox.async_api import AsyncCamoufox
+from playwright.async_api import async_playwright
 
 from .parser import parse_job_listing
 from .utils import extract_json_data, build_search_url
@@ -30,21 +30,32 @@ async def main() -> None:
         search_url = build_search_url(search_query, location, experience)
         Actor.log.info(f"Search URL: {search_url}")
         
-        # Launch browser with Camoufox
-        Actor.log.info("Launching Camoufox browser...")
-        browser_args = {
-            "headless": True,
-            "addons": [],
-        }
+        # Launch browser with Playwright
+        Actor.log.info("Launching Playwright browser...")
         
-        # Add proxy if configured
-        if proxy_config:
-            proxy_url = await Actor.create_proxy_url(proxy_config)
-            if proxy_url:
-                Actor.log.info(f"Using proxy: {proxy_url}")
-                browser_args["proxy"] = proxy_url
-        
-        async with AsyncCamoufox(**browser_args) as browser:
+        async with async_playwright() as p:
+            # Browser launch options
+            launch_options = {
+                "headless": True,
+            }
+            
+            # Add proxy if configured
+            if proxy_config:
+                proxy_url = await Actor.create_proxy_url(proxy_config)
+                if proxy_url:
+                    Actor.log.info(f"Using proxy")
+                    # Parse proxy URL
+                    import re
+                    match = re.match(r'http://([^:]+):([^@]+)@([^:]+):(\d+)', proxy_url)
+                    if match:
+                        username, password, server, port = match.groups()
+                        launch_options["proxy"] = {
+                            "server": f"http://{server}:{port}",
+                            "username": username,
+                            "password": password
+                        }
+            
+            browser = await p.firefox.launch(**launch_options)
             page = await browser.new_page()
             
             try:
@@ -94,5 +105,6 @@ async def main() -> None:
                 raise
             finally:
                 await page.close()
+                await browser.close()
         
         Actor.log.info("Actor finished successfully")

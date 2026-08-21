@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies for Playwright
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
@@ -13,8 +13,9 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Fetch Camoufox browser
-RUN python3 -m camoufox fetch
+# Install Playwright browsers
+RUN playwright install firefox
+RUN playwright install-deps firefox
 
 # Copy actor source code
 COPY src ./src

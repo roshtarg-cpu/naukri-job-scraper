@@ -188,7 +188,7 @@ Connect to 1000+ apps via webhooks:
 
 **Technology Stack:**
 - Python 3.11
-- Camoufox (Firefox-based browser automation)
+- Playwright (Firefox browser automation)
 - BeautifulSoup4 (HTML parsing)
 - Apify SDK (actor framework)
 
