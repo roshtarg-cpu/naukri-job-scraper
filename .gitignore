@@ -14,7 +14,9 @@ pip-delete-this-directory.txt
 # Apify
 apify_storage/
 storage/
-.actor/
+# Keep .actor/ config files but ignore storage
+!.actor/
+.actor/storage/
 
 # IDE
 .vscode/
